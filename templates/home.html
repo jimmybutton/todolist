@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h2>Home</h2>
+{% if user.is_authenticated %}
+<p>Hi {{ user.username }}!</p>
+{% else %}
+<p>You are not logged in</p>
+<a class="w3-button w3-gray" href="{% url 'login' %}">Login</a>
+{% endif %}
+{% endblock %}
