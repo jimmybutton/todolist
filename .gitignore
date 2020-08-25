@@ -11,3 +11,6 @@ venv/
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
+
+# custom stuff
+sent_emails/
