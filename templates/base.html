@@ -13,7 +13,7 @@
   <nav>
     <div class="w3-bar w3-light-grey">
       <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-mobile">Home</a>
-      <a href="#" class="w3-bar-item w3-button w3-mobile">Link 1</a>
+      <a href="{% url 'todo_list' %}" class="w3-bar-item w3-button w3-mobile">Todo</a>
       <a href="#" class="w3-bar-item w3-button w3-mobile">Link 2</a>
       <a href="#" class="w3-bar-item w3-button w3-mobile">Link 3</a>
       <div class="w3-dropdown-hover w3-mobile w3-right">
@@ -32,6 +32,15 @@
     </div>
   </nav>
   <main>
+    <div class="w3-container">
+      {% if messages %}
+      <div class="w3-panel w3-teal">
+        {% for message in messages %}
+        <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
     <div class="w3-container">
       {% block content %}
       {% endblock %}

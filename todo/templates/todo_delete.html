@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete item{% endblock %}
+
+{% block content %}
+<h2>Please confirm</h2>
+<p>Are you sure you want to delete the item <b>{{ todo_item.text }}</b> from your list?</p>
+
+<form action="" method="post">
+  {% csrf_token %}
+  {{ form }}
+  <button class="w3-button w3-red" type="submit">Delete</button>
+  <a href="{% url 'todo_list' %}" class="w3-button w3-gray">Cancel</a>
+</form>
+{% endblock %}

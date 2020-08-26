@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block title %}Todo List{% endblock %}
+
+{% block content %}
+<h2>Todo List</h2>
+
+<form action="" method="post">
+  {% csrf_token %}
+  <div class="w3-row">
+    <div class="w3-col w3-right" style="width:100px">
+      <button class="w3-margin-left w3-button w3-teal" type="submit">Submit</button>
+    </div>
+    <div class="w3-rest">
+      {% render_field form.text class+="w3-input w3-border" placeholder=form.text.label %}
+    </div>
+  </div>
+</form>
+
+{% if todo_list %}
+<table class="w3-table w3-striped">
+  <tr>
+    <th>Text</th>
+    <th>Created</th>
+    <th class="w3-center">Completed?</th>
+    <th>Actions</th>
+  </tr>
+  {% for todo in todo_list %}
+  <tr>
+    <td><b>{{ todo.text }}</b></td>
+    <td>{{ todo.created|timesince }} ago</td>
+    <td class="w3-center">
+      {% if todo.completed %}
+      <i class="fa fa-check w3-text-teal" aria-hidden="true"></i>
+      {% else %}
+      <i class="fa fa-times w3-text-red" aria-hidden="true"></i>
+      {% endif %}
+    </td>
+    <td>
+      <div class="w3-dropdown-hover">
+        <button class="w3-button w3-teal">...</button>
+        <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+          <form action="{% url 'todo_toggle' pk=todo.id %}" method="POST">
+            {% csrf_token %}
+            {{ toggleform }}
+            <button class=" w3-bar-item w3-button">
+              {% if todo.completed %}
+              Mark as uncompleted
+              {% else %}
+              Mark as completed
+              {% endif %}
+            </button>
+          </form>
+          <a href="{% url 'todo_delete' pk=todo.id %}" class="w3-bar-item w3-button">Delete</a>
+        </div>
+      </div>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>There are no items in your todo list yet.</p>
+{% endif %}
+{% endblock %}
